@@ -67,6 +67,9 @@
 |    NOT FOR PRODUCTION                                     
 \__________________________________________________________*/
 
+// This program is designed to run an MSP430 Launchpad running software that triggers
+// the indexing of pre-programmed image files on a DLPLightcrafter projector
+
 import processing.video.*;    // Get the video capture driver libraries
 import processing.serial.*;   // Get the serial I/O driver libraries
 
@@ -75,14 +78,16 @@ boolean saveImg = false;
 
 Capture cam;
 
-int MSP430_SetPhase(int thisPhase);
 
 void setup() {
   size(1280, 800);  // Size of capture window needs to match resolution of the camera
 //  size(640, 480);  // Size of capture window needs to match resolution of the camera
 
   String[] cameras = Capture.list();
-  
+ 
+ 
+  // You need to run the program once to generate a list of available serial ports.
+  // Then change the "index" of Serial.list()[index] to match the port your Launchpad is attached to 
   println(Serial.list());
   myPort = new Serial(this, Serial.list()[1], 9600);
 
