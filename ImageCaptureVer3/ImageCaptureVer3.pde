@@ -73,6 +73,7 @@
 import processing.video.*;    // Get the video capture driver libraries
 import processing.serial.*;   // Get the serial I/O driver libraries
 
+Serial myPort;                       // The serial port
 int phaseNum = 0;
 boolean saveImg = false;
 
