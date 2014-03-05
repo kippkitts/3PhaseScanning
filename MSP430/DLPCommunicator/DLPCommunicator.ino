@@ -27,7 +27,8 @@ const int bSize = 20;
  
 //=====[ PINS ]=================================================================
 int Led        = GREEN_LED;  // LED pin for debugging.   
-int TriggerPin = 32;        // Pin 3.7 connects to Trigger 1/J11 on the DLP.
+//int TriggerPin = 32;        // Pin 3.7 connects to Trigger 1/J11 on the DLP.
+int TriggerPin = 10;        // Pin 2.2 connects to Trigger 1/J11 on the DLP.
  
 //=====[ VARIABLES ]============================================================
  
