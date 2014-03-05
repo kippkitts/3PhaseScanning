@@ -8,7 +8,7 @@ If you want to run this code in  Win7 or Win8 using a standard install of Proces
 Please implement the following workaround:
 Replace the following files in Processing 2.1.1 with versions from Processing 2.1.0 or 2.0.3:
 	
->gstreamer-java.jar
+>gstreamer-java.jar  
 >jna.jar
 
 These files can be found in the directory:
