@@ -7,9 +7,9 @@ java.lang.ExceptionInInitializerError
   
 Please implement the following workaround:
 Replace the following files in Processing 2.1.1 with versions from Processing 2.1.0 or 2.0.3:
-
-gstreamer-java.jar
-jna.jar
+	
+	'''gstreamer-java.jar
+	jna.jar'''
 
 These files can be found in the directory:
   \modes\java\libraries\video\library
