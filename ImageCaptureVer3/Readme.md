@@ -7,14 +7,14 @@ To set the serial port, find the following code block and follow the instruction
    	println(Serial.list());
    	myPort = new Serial(this, Serial.list()[1], 9600);
 
-##### Remember that the "index" value must match the array index of the serial port you want to use, not the serial port number itself. i.e. if your ports look like this:  
+##### Remember that the "index" value must match the array index of the serial port you want to use, not the serial port number itself. i.e. if your ports look like this:
 COM1  
 COM2  
 COM7  
 The array value you want to use for COM7 is "2", not "7"  
 
 To set the camera, find the following code block and follow the instructions in the comment:
-   	// The camera can be initialized directly using an element
+'''// The camera can be initialized directly using an element
    	// from the array returned by list():
    	cam = new Capture(this, cameras[0]); 
    	// Or, the settings can be defined based on the text in the list
