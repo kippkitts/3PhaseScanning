@@ -81,8 +81,8 @@ Capture cam;
 
 
 void setup() {
-  size(1280, 800);  // Size of capture window needs to match resolution of the camera
-//  size(640, 480);  // Size of capture window needs to match resolution of the camera
+  //size(1280, 800);  // Size of capture window needs to match resolution of the camera
+  size(640, 480);  // Size of capture window needs to match resolution of the camera
 
   String[] cameras = Capture.list();
  
@@ -132,7 +132,11 @@ void draw() {
   if (phaseNum>0) {
     saveFrame("phase"+phaseNum+".jpg");
     println("Saved Phase" + phaseNum);
+    delay(1000);  // Add some delay to help DLP
+    delay(1000);  // Add some delay to help DLP
     MSP430_SetPhase(phaseNum + 1);  // Switch to the next phase
+    delay(1000);  // Add some delay to help DLP
+    delay(1000);  // Add some delay to help DLP
     println("Switched to phase" + phaseNum);
   }
   phaseNum++;
