@@ -76,11 +76,13 @@ import processing.serial.*;   // Get the serial I/O driver libraries
 Serial myPort;                       // The serial port
 int phaseNum = 0;
 boolean saveImg = false;
+int grabindex = 0;
 
 Capture cam;
 
 
 void setup() {
+
   //size(1280, 800);  // Size of capture window needs to match resolution of the camera
   size(640, 480);  // Size of capture window needs to match resolution of the camera
 
@@ -92,9 +94,10 @@ void setup() {
   println(Serial.list());
   myPort = new Serial(this, Serial.list()[1], 9600);
 
+
   if (cameras == null) {
     println("Failed to retrieve the list of available cameras, will try the default...");
-//    cam = new Capture(this, 1280, 800);  // Capture buffer also needs to match the resolution of the camera
+    //cam = new Capture(this, 1280, 800);  // Capture buffer also needs to match the resolution of the camera
       cam = new Capture(this, 640, 480);  // Capture buffer also needs to match the resolution of the camera
   } 
   if (cameras.length == 0) {
@@ -109,7 +112,7 @@ void setup() {
 
     // The camera can be initialized directly using an element
     // from the array returned by list():
-    cam = new Capture(this, cameras[0]); 
+    cam = new Capture(this, cameras[1]); 
     // Or, the settings can be defined based on the text in the list
     //cam = new Capture(this, 640, 480, "Built-in iSight", 30);
 
@@ -117,39 +120,54 @@ void setup() {
     cam.start();
   }
 
-  // Set phase one here
+  set(0, 0, cam);
+  phaseNum = 1;
 
 }
 
 void draw() {
-
-  if (cam.available() == true) {
+  
+    while (cam.available() == false)
+    {
+      delay(100);
+      // add a timeout counter
+    }
+    
     cam.read();
-    set(0, 0, cam);//NO NEED TO CALL SET MORE THAN ONCE FOR THE SAME CAM IMAGE
-  } 
-
-  delay(1000);  // Add some delay to help slower computers
-  if (phaseNum>0) {
-    saveFrame("phase"+phaseNum+".jpg");
-    println("Saved Phase" + phaseNum);
-    delay(1000);  // Add some delay to help DLP
-    delay(1000);  // Add some delay to help DLP
-    MSP430_SetPhase(phaseNum + 1);  // Switch to the next phase
-    delay(1000);  // Add some delay to help DLP
-    delay(1000);  // Add some delay to help DLP
-    println("Switched to phase" + phaseNum);
-  }
-  phaseNum++;
-  if (phaseNum == 4)
-  {
-    exit();
-  }
+    image(cam, 0, 0);
+//    set(0, 0, cam);
+    
+    if(grabindex % 50 == 0)
+    {
+      MSP430_SetPhase(phaseNum + 1);  // Switch to the next phase
+      delay(500);
+      cam.read();
+      image(cam, 0, 0);
+      //delay(500);
+      
+      saveFrame("phase"+phaseNum+".jpg");
+      phaseNum++;
+      println(grabindex);
+    }
+    
+    delay(1);
+    grabindex++;
+    
+    if(grabindex > 190)
+    {
+      exit();
+    }
 }
 
 int MSP430_SetPhase(int thisPhase)
 {
   // Right now, the MSP430 code just toggles the trigger pin to switch projected phases
-  // 
-  myPort.write("next:0");
+
+  myPort.write("1");
+  while (myPort.available() == 0)
+  {
+    myPort.readStringUntil(':');  //
+  }
+
   return thisPhase;  // Just echo back the phase for now
 }
